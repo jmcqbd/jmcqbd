@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRE Analogy — Interactive MCQ Test</title>
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:Arial,Helvetica,sans-serif;color:#172033;
+  background:linear-gradient(135deg,#f4f7ff 0%,#eef7ff 45%,#f3fffb 100%);
+}
+.app{max-width:920px;margin:auto;min-height:100vh;padding:18px}
+.card{
+  background:rgba(255,255,255,.97);border-radius:26px;overflow:visible;
+  box-shadow:0 18px 50px rgba(31,55,110,.16);border:1px solid #e5ebf5;
+}
+.hidden{display:none!important}
+
+.brand{
+  font-size:30px;font-weight:950;letter-spacing:2.5px;color:#1649b9;
+  text-align:center
+}
+#page1{max-width:900px;margin:5vh auto 0}
+
+.hero{
+  padding:34px 44px 42px;text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(145deg,#ffffff 0%,#f6f9ff 55%,#effcf8 100%);
+}
+.hero:before{
+  content:"";position:absolute;left:-20px;top:-25px;width:190px;height:150px;
+  background:linear-gradient(135deg,#2459d6,#28a6ff);
+  border-radius:0 0 100px 0;opacity:.96
+}
+.hero:after{
+  content:"";position:absolute;right:-20px;bottom:-20px;width:210px;height:145px;
+  background:linear-gradient(135deg,#ffd83d,#ff9f1c);
+  border-radius:100px 0 0 0;opacity:.95
+}
+.hero>*{position:relative;z-index:1}
+.hero>.brand{margin-bottom:6px}
+.brandMark{
+  width:105px;height:5px;border-radius:50%;margin:4px auto 18px;
+  background:linear-gradient(90deg,#2459d6,#18b8ff,#19c98b);transform:skewX(-25deg)
+}
+h1{
+  font-size:48px;line-height:1.08;margin:14px 0 20px;color:#101a38;font-weight:950;
+  letter-spacing:-1px
+}
+h1 span{color:#1767d7}
+.ribbon{
+  display:inline-block;background:linear-gradient(90deg,#ffca28,#ffad18);
+  color:#162033;font-size:22px;font-weight:950;padding:9px 34px;
+  clip-path:polygon(0 0,100% 0,93% 50%,100% 100%,0 100%,7% 50%);
+  margin-bottom:16px;box-shadow:0 8px 20px rgba(255,177,22,.25)
+}
+.timeInfo{
+  display:inline-block;font-size:19px;font-weight:900;color:#173b79;
+  margin:4px 0 24px;background:#edf5ff;padding:9px 18px;border-radius:999px
+}
+label{font-weight:800;display:block;margin:12px 0 8px;text-align:left}
+input[type=text]{
+  width:100%;padding:15px 18px;border:2px solid #d8e1ef;border-radius:16px;
+  font-size:17px;outline:none;background:#fff
+}
+input[type=text]:focus{
+  border-color:#2875df;box-shadow:0 0 0 4px rgba(40,117,223,.12)
+}
+.start,.submit,.again{
+  border:0;cursor:pointer;color:#fff;
+  background:linear-gradient(100deg,#1456d9,#178cf0,#16b98a);
+  box-shadow:0 10px 22px rgba(22,94,210,.24);font-weight:950;
+  transition:.18s transform,.18s box-shadow
+}
+.start:hover,.submit:hover,.again:hover{transform:translateY(-2px);box-shadow:0 13px 26px rgba(22,94,210,.3)}
+.start{width:min(420px,100%);margin-top:22px;padding:15px;border-radius:18px;font-size:19px}
+
+.testHeader{
+  position:sticky;top:0;z-index:1000;color:#fff;padding:16px 28px 15px;
+  background:linear-gradient(120deg,#123fa9,#176bd8 55%,#087f9e);
+  box-shadow:0 5px 18px rgba(8,54,130,.22)
+}
+.testTop{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.testBrand{font-size:25px;font-weight:950;letter-spacing:1.5px}
+.timeBox{text-align:center}
+.timeLabel{font-size:13px;font-weight:800;margin-bottom:4px;opacity:.9}
+.timer{
+  background:#081a39;color:#ffd32b;border:2px solid rgba(255,255,255,.14);
+  border-radius:12px;padding:7px 20px;font-size:26px;font-weight:950;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)
+}
+.questionCount{text-align:right;font-size:14px;opacity:.95}
+.questionCount b{display:block;font-size:21px;margin-top:3px}
+.progressTrack{display:none}
+#progressBar{display:none}
+
+.testBody{padding:25px 34px 34px}
+.testBody #questions{display:grid;gap:16px}
+.q{
+  border:1px solid #e1e8f2;border-radius:19px;padding:19px;
+  background:linear-gradient(180deg,#fff,#f9fbff);
+  box-shadow:0 5px 15px rgba(25,55,100,.06)
+}
+.qtitle{
+  font-weight:950;font-size:21px;margin-bottom:15px;line-height:1.4;color:#162448
+}
+.option{
+  display:flex;align-items:center;gap:11px;padding:10px 13px;
+  border:1px solid #e0e6ef;border-radius:14px;margin:8px 0;cursor:pointer;
+  background:#fff;transition:.15s
+}
+.option:hover{
+  border-color:#2a72df;background:#f3f8ff;
+  box-shadow:0 4px 10px rgba(42,114,223,.09)
+}
+.option.selected{
+  border:2px solid #7c3aed;
+  background:linear-gradient(100deg,#f0e7ff,#e7f0ff);
+  box-shadow:0 0 0 3px rgba(124,58,237,.14),0 6px 15px rgba(124,58,237,.12);
+}
+.option.selected .optionLetter{
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  transform:scale(1.06);
+}
+.option.selected span:last-child{
+  color:#5b21b6;
+  font-weight:900;
+}
+.option input{display:none}
+.optionLetter{
+  width:33px;height:33px;min-width:33px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,#1953c9,#1a8ae8);color:#fff;font-weight:950
+}
+.navRow{display:flex;justify-content:center;gap:14px;margin-top:25px}
+.submit{min-width:260px;border-radius:18px;padding:14px 28px;font-size:16px}
+
+.resultHero{
+  background:linear-gradient(135deg,#b9f4e6 0%,#e7fff8 50%,#dceaff 100%);
+  padding:28px 30px 25px;text-align:center
+}
+.resultBrand{font-size:30px;color:#1649b9}
+.resultTitle{font-size:31px;font-weight:950;color:#10204a;margin:8px 0 3px}
+.resultName{font-size:18px;font-weight:800;color:#285084}
+.scorePanel{
+  max-width:600px;margin:16px auto 0;background:rgba(255,255,255,.94);
+  border-radius:19px;padding:17px;display:flex;justify-content:center;gap:70px;
+  box-shadow:0 8px 24px rgba(22,74,80,.13)
+}
+.scoreItem{font-weight:850;font-size:16px}
+.score{font-size:42px;font-weight:950;color:#07986b;margin-top:4px}
+.grade{font-size:27px;font-weight:950;color:#087f66;margin-top:5px}
+.resultBody{padding:23px 30px 30px}
+.resultBody h2{color:#d52e42;font-size:20px;margin:0 0 12px}
+.wrong{
+  text-align:left;border:1px solid #f0dddd;border-radius:13px;
+  background:#fffafa;padding:12px 14px;margin:9px 0
+}
+.correct{color:#11864d;font-weight:850;text-align:center}
+.answer{color:#159447;font-weight:850;margin-top:4px}
+.your{color:#d92828;font-weight:850}
+.small{font-size:14px;color:#667085;margin-top:6px}
+.again{display:block;margin:20px auto 0;border-radius:18px;padding:13px 28px;font-size:16px}
+
+@media(max-width:650px){
+  .app{padding:9px}
+  #page1{margin-top:2vh}
+  .hero{padding:28px 18px 32px}
+  h1{font-size:34px}
+  .ribbon{font-size:17px;padding:8px 24px}
+  .timeInfo{font-size:17px}
+  .testHeader{padding:14px 16px}
+  .testTop{flex-wrap:wrap}
+  .testBrand{font-size:20px}
+  .timer{font-size:21px;padding:7px 14px}
+  .questionCount{font-size:12px}
+  .questionCount b{font-size:18px}
+  .testBody{padding:16px}
+  .q{padding:16px}
+  .qtitle{font-size:18px}
+  .option{font-size:15px;padding:9px 11px}
+  .scorePanel{gap:28px}
+}
+
+.testCard{border-radius:26px}
+.testCard .testBody{border-radius:0 0 26px 26px}
+.resultCard,.resultCard .resultHero,.resultCard .resultBody{border-radius:26px}
+.resultCard{margin-top:0}
+@media(max-width:650px){
+  .testHeader{top:0}
+  .testCard{border-radius:20px}
+}
+
+</style>
+
+</head>
+<body>
+<div class="app">
+
+<section id="page1" class="card">
+  <div class="hero">
+    <div class="brand">JMCQBD</div>
+    <h1>GRE Analogy <span>MCQ Test</span></h1>
+    <div class="ribbon">30 Important Questions</div>
+    <div class="timeInfo">◷ Time: 4 Minutes</div>
+    <label for="name">Your Name</label>
+    <input id="name" type="text" placeholder="Enter your name here...">
+    <button class="start" onclick="startTest()">START TEST&nbsp;&nbsp; ➜</button>
+  </div>
+</section>
+
+<section id="page2" class="card hidden testCard">
+  <div class="testHeader">
+    <div class="testTop">
+      <div class="testBrand">JMCQBD</div>
+      <div class="timeBox">
+        <div class="timeLabel">Time Left</div>
+        <div id="timer" class="timer">04:00</div>
+      </div>
+      <div class="questionCount">Questions<b>30 MCQs</b></div>
+    </div>
+    <div class="progressTrack"><div id="progressBar"></div></div>
+  </div>
+  <div class="testBody">
+    <div id="questions"></div>
+    <div class="navRow">
+      <button id="submitBtn" class="submit" onclick="submitTest(false)">SUBMIT TEST</button>
+    </div>
+  </div>
+</section>
+
+<section id="page3" class="card hidden resultCard">
+  <div class="resultHero">
+    <div class="resultBrand">JMCQBD</div>
+    <div class="resultTitle">Test Result</div><div class="resultName"><span id="resultName"></span></div>
+    <div class="scorePanel">
+      <div class="scoreItem">Your Score<div id="score" class="score"></div></div>
+      <div class="scoreItem">Result<div id="grade" class="grade"></div></div>
+    </div>
+  </div>
+  <div class="resultBody"><div id="wrongList"></div><button class="again" onclick="location.reload()">TAKE TEST AGAIN</button></div>
+</section>
+
+</div>
+
+
+<script>
+const questions = [
+{q:"ARBOREAL : TREES ::", o:["terrestrial : plains","amphibious : rivers","herbaceous : plants","subterranean : caves","sidereal : stars"], a:4},
+{q:"SCALPEL : SURGEON ::", o:["laser : agronomist","magnet : ecologist","syringe : geologist","telescope : astronomer","microscope : geometrician"], a:3},
+{q:"EXHIBITION : PAINTING ::", o:["concert : symphony","accompaniment : melody","audition : chorus","improvisation : solo","rehearsal : orchestra"], a:0},
+{q:"VERBOSITY : WORDS ::", o:["harmoniousness : relationships","floridness : embellishments","interrogation : answers","condemnation : acts","supposition : proposals"], a:1},
+{q:"APPLE : FRUIT ::", o:["egg : chicken","rung : chair","wool : fabric","fuse : dynamic","wick : candle"], a:2},
+{q:"STERILIZATION : MICROORGANISMS ::", o:["amnesty : deserters","defamation : enemies","inoculation : vaccine","deforestation : trees","assassination : murderers"], a:3},
+{q:"MISER : STINGY ::", o:["porter : strong","rebel : ideal","sage : docile","friend : snide","loner : solitary"], a:4},
+{q:"ENVELOPE : LETTER ::", o:["scarf : hat","box : bag","crate : produce","neck : head","blood : heart"], a:2},
+{q:"BARRAGE : EXPLOSIVES ::", o:["cacophony : sounds","deluge : rain","vista : sights","grenade : bombs","volcano : lava"], a:1},
+{q:"AQUEDUCT : WATER ::", o:["capillary : saliva","artery : blood","esophagus : breath","corridor : aircraft","tanker : fluids"], a:1},
+{q:"PANEGYRIC : EULOGIZE ::", o:["ballad : stigmatize","ode : criticize","lampoon : satirize","tirade : entertain","treatise : dispute"], a:2},
+{q:"EMIGRATE : EXILE ::", o:["select : organize","appoint : nominate","capture : imprison","enlist : conscript","contribute : deduct"], a:3},
+{q:"QUIXOTIC : IDEALISTIC ::", o:["churlish : polite","whimsical : steady","disinterested : impartial","touchy : sensitive","central : random"], a:3},
+{q:"FRESCO : WALL ::", o:["fountain : courtyard","parquetry : floor","thatch : roof","statuary : passage","gargoyle : gutter"], a:1},
+{q:"WARY : GULLED ::", o:["passionate : moved","taciturn : goaded","loquacious : befriended","vigilant : ambushed","shrill : satisfied"], a:3},
+{q:"ENZYME : CATALYST ::", o:["vaccine : allergy","bacterium : microbe","gland : muscle","vein : organ","neuron : corpuscle"], a:1},
+{q:"HAMMER : ANVIL ::", o:["knocker : door","stick : gong","hand : drum","pestle : mortar","gavel : lectern"], a:3},
+{q:"OSTRICH : BIRD ::", o:["caterpillar : moth","lizard : frog","bud : leaf","tiger : cat","guest : storm"], a:3},
+{q:"ORCHESTRA : INSTRUMENTAL ::", o:["choir : vocal","pianist : discordant","trio : harmonic","singer : sacred","band : martial"], a:0},
+{q:"ADULT : CHILD ::", o:["horse : mare","cat : kitten","swine : sow","human : animal","cow : herd"], a:1},
+{q:"WARDROBE : CLOTHES ::", o:["stove : crockery","bookcase : books","drawer : shelves","pantry : medicine","necklace : earrings"], a:1},
+{q:"TROPHY : CONTESTANT ::", o:["baton : runner","pride : parent","book : bibliography","loan : cashier","honors : student"], a:4},
+{q:"GLOSSARY : TEXT ::", o:["bibliography : source","abstract : dissertation","legend : map","index : catalog","abbreviation : footnote"], a:2},
+{q:"PRACTICING : EXPERTISE ::", o:["thinking : logic","writing : clarity","growing : health","exercising : strength","eating : nutrition"], a:3},
+{q:"LISTENER : EAVESDROPPER ::", o:["spectator : game","viewer : gazer","observer : spy","speaker : chatterbox","leader : demagogue"], a:2},
+{q:"SHARD : POTTERY ::", o:["flint : stone","flange : wheel","cinder : coal","fragment : bone","tare : grain"], a:3},
+{q:"ARTERY : PLAQUE ::", o:["river : levee","track : switch","channel : silt","information : flow","tunnel : wall"], a:2},
+{q:"FIDGET : NERVOUSNESS ::", o:["cringe : dread","stall : frustration","regale : amusement","doubt : consternation","nag : annoyance"], a:0},
+{q:"FERTILIZE : GROW ::", o:["immunize : resist","nourish : enrich","heat : burn","graft : multiply","prune : dwarf"], a:0},
+{q:"MICROSCOPE : SMALL ::", o:["telescope : distant","monocle : single","lens : refracted","camera : photographic","periscope : military"], a:0}
+];
+
+let timer,seconds=240,submitted=false;
+const answers=Array(questions.length).fill(-1);
+
+function renderQuestions(){
+  const box=document.getElementById('questions');
+  box.innerHTML='';
+  questions.forEach((x,i)=>{
+    let s='<div class="q"><div class="qtitle">'+(i+1)+'. '+x.q+'</div>';
+    x.o.forEach((op,j)=>{
+      const letter=String.fromCharCode(65+j);
+      s+='<label class="option" onclick="chooseAnswer('+i+','+j+')">'+
+         '<input type="radio" name="q'+i+'" value="'+j+'">'+
+         '<span class="optionLetter">'+letter+'</span><span>'+op+'</span></label>';
+    });
+    s+='</div>';
+    box.innerHTML+=s;
+  });
+}
+
+function chooseAnswer(i,j){
+  answers[i]=j;
+  const labels=document.querySelectorAll('input[name="q'+i+'"]');
+  labels.forEach((input)=>{
+    input.parentElement.classList.toggle('selected',Number(input.value)===j);
+    input.checked=Number(input.value)===j;
+  });
+  updateProgress();
+}
+
+function updateProgress(){
+  const answered=answers.filter(v=>v!==-1).length;
+  /* Progress bar intentionally removed for a cleaner design. */
+}
+
+function startTest(){
+  const name=document.getElementById('name').value.trim();
+  if(!name){alert('Please enter your name.');return}
+  document.getElementById('page1').classList.add('hidden');
+  document.getElementById('page2').classList.remove('hidden');
+  renderQuestions();
+  updateProgress();
+  timer=setInterval(()=>{
+    seconds--;
+    updateTimer();
+    if(seconds<=0) submitTest(true);
+  },1000);
+}
+
+function updateTimer(){
+  const m=Math.floor(seconds/60).toString().padStart(2,'0');
+  const s=(seconds%60).toString().padStart(2,'0');
+  document.getElementById('timer').textContent=m+':'+s;
+  if(seconds<=30)document.getElementById('timer').style.background='#9f1239';
+}
+
+function submitTest(auto){
+  if(submitted)return;
+  submitted=true;
+  clearInterval(timer);
+  let score=0,wrong=[];
+  questions.forEach((x,i)=>{
+    if(answers[i]===x.a)score++;
+    else wrong.push({i,chosen:answers[i]});
+  });
+
+  document.getElementById('page2').classList.add('hidden');
+  document.getElementById('page3').classList.remove('hidden');
+
+  // Show the result summary immediately at the top; incorrect answers remain below.
+  window.scrollTo(0, 0);
+
+  document.getElementById('resultName').textContent=document.getElementById('name').value.trim();
+  document.getElementById('score').textContent=score+' / '+questions.length;
+
+  let grade='';
+  const pct=(score/questions.length)*100;
+  if(score===questions.length) grade='Excellent!';
+  else if(pct>=95) grade='Very Good!';
+  else if(pct>=75) grade='Good';
+  else grade='Bad';
+  document.getElementById('grade').textContent=grade;
+
+  const list=document.getElementById('wrongList');
+  if(wrong.length===0){
+    list.innerHTML='<p class="correct" style="font-size:18px">All answers are correct! 🎉</p>';
+  }else{
+    list.innerHTML='<h2>Incorrect Answers</h2>'+wrong.map(w=>{
+      const x=questions[w.i];
+      const chosen=w.chosen>=0?String.fromCharCode(65+w.chosen)+') '+x.o[w.chosen]:'Not answered';
+      const correct=String.fromCharCode(65+x.a)+') '+x.o[x.a];
+      return '<div class="wrong"><b>'+(w.i+1)+'. '+x.q+
+        '</b><div class="small your">Your Answer: '+chosen+
+        '</div><div class="small answer">Correct Answer: '+correct+'</div></div>';
+    }).join('');
+  }
+  if(auto)alert('Time is up! Your test has been submitted automatically.');
+}
+</script>
+
+</body>
+</html>
