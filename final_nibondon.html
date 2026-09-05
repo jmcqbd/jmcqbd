@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JMCQBD - ১৭তম প্রভাষক নিবন্ধন পরীক্ষা-২০২২</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:"Noto Sans Bengali","SolaimanLipi",Arial,sans-serif;background:#eef4ff;color:#172033}
+.wrap{max-width:900px;margin:auto;padding:14px}.card{background:#fff;border-radius:22px;box-shadow:0 8px 30px #0001;overflow:hidden}
+.head{background:linear-gradient(135deg,#123f9e,#1767d8);color:#fff;text-align:center;padding:20px 15px}.brand{font-size:30px;font-weight:900;letter-spacing:1px}.exam{font-size:20px;font-weight:800;margin-top:7px}
+.start{padding:35px 22px;text-align:center}.icon{font-size:62px}.start h1{font-size:27px;margin:12px 0}.info{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:25px 0}.pill{background:#f1f6ff;border:1px solid #d8e5ff;border-radius:15px;padding:14px 22px;font-weight:700}
+button{border:0;border-radius:12px;padding:13px 25px;font-size:18px;font-weight:800;cursor:pointer}.startbtn{background:#16a765;color:#fff;min-width:220px}.top{display:flex;align-items:center;justify-content:space-between;background:#123f9e;color:#fff;padding:13px 18px;font-weight:800}.timer{font-size:18px;background:#0b317f;padding:7px 13px;border-radius:20px}
+.body{padding:18px}.progress{height:8px;background:#e6ebf5;border-radius:20px;overflow:hidden;margin-bottom:15px}.bar{height:100%;background:#16a765;width:1%}
+.qno{font-size:18px;font-weight:800;color:#1452b8}.question{font-size:22px;font-weight:800;line-height:1.65;margin:10px 0 18px}
+.option{display:block;border:1px solid #d6deeb;padding:13px 15px;margin:10px 0;border-radius:12px;cursor:pointer;font-size:18px;background:#fff}.option:hover{background:#f3f7ff}.option input{margin-right:10px;transform:scale(1.25)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.prev{background:#eef3fb;color:#17468f}.next{background:#1767d8;color:#fff}.submit{display:block;background:#e53935;color:#fff;margin:22px auto 0;min-width:170px}
+.result{text-align:center;padding:28px 18px}.score{font-size:42px;font-weight:900;color:#1767d8}.stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0}.stat{padding:14px 22px;border-radius:14px;background:#f4f7fb;font-weight:800}.correct{color:#12924d}.wrong{color:#d82f2f}.wrongbox{text-align:left;margin-top:20px}.wrongbox h2{color:#d82f2f}.wrongitem{border:1px solid #ffd1d1;border-left:5px solid #e53935;padding:13px;border-radius:10px;margin:10px 0;background:#fff8f8}.restart{background:#1767d8;color:#fff;margin-top:18px}
+.hidden{display:none!important}
+.rangeBtns{display:flex;gap:8px;margin-bottom:10px}
+.rangeBtns button{flex:1;padding:9px 8px;font-size:14px;background:#edf2fa;color:#234;border:1px solid #d6deeb;border-radius:10px}
+.rangeBtns button.rangeActive{background:#1767d8;color:#fff}
+.jump{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+.jump button{padding:5px 8px;font-size:12px;background:#edf2fa;color:#234}
+.jump button.done{background:#16a765;color:#fff}
+.jump button.current{outline:3px solid #ffd166}
+@media(max-width:600px){.brand{font-size:25px}.exam{font-size:17px}.start h1{font-size:22px}.question{font-size:19px}.option{font-size:16px}.top{font-size:14px}.timer{font-size:15px}.body{padding:13px}}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+<div id="startPage">
+  <div class="head"><div class="brand">JMCQBD</div><div class="exam">১৭তম প্রভাষক নিবন্ধন পরীক্ষা-২০২২</div></div>
+  <div class="start">
+    <div class="icon">📚</div>
+    <h1>১৭তম প্রভাষক নিবন্ধন পরীক্ষা-২০২২</h1>
+    <p>বাংলা, ইংরেজি, সাধারণ জ্ঞান, গণিত ও যুক্তিসহ বহুনির্বাচনী প্রশ্ন</p>
+    <div class="info"><div class="pill">📝 প্রশ্ন: <span id="startTotal">১০০</span>টি</div><div class="pill">⏱️ সময়: ১ ঘণ্টা</div><div class="pill">🎯 সঠিক +১ | ভুল −০.২৫</div></div>
+    <button class="startbtn" onclick="startExam()">START</button>
+  </div>
+</div>
+
+<div id="examPage" class="hidden">
+  <div class="top"><span>JMCQBD</span><span class="timer">⏱️ <span id="timer">60:00</span></span><span>প্রশ্ন <span id="currentNo">1</span>/<span id="totalNo">১০০</span></span></div>
+  <div class="body">
+    <div class="rangeBtns" id="rangeBtns">
+      <button type="button" id="range1" class="rangeActive" onclick="showRange(0)">১–৫০</button>
+      <button type="button" id="range2" onclick="showRange(1)">৫১–১০০</button>
+    </div>
+    <div class="jump" id="jump"></div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="qno" id="qno"></div><div class="question" id="question"></div><div id="options"></div>
+    <div class="nav"><button class="prev" onclick="prevQ()">◀ পূর্ববর্তী</button><button class="next" onclick="nextQ()">পরবর্তী ▶</button></div>
+    <button class="submit" onclick="submitExam()">SUBMIT</button>
+  </div>
+</div>
+
+<div id="resultPage" class="hidden">
+ <div class="head"><div class="brand">JMCQBD</div><div class="exam">পরীক্ষার ফলাফল</div></div>
+ <div class="result">
+  <div class="score" id="score"></div>
+  <div class="stats"><div class="stat correct">সঠিক: <span id="correct"></span></div><div class="stat wrong">ভুল: <span id="wrong"></span></div><div class="stat">উত্তর দেওয়া হয়নি: <span id="unanswered"></span></div><div class="stat">শতকরা: <span id="percent"></span>%</div></div>
+  <div class="wrongbox"><h2>প্রশ্ন ও উত্তরসমূহ</h2><div id="wrongList"></div></div>
+  <button class="restart" onclick="localStorage.removeItem(STORAGE_KEY);location.reload()">আবার দিন</button>
+ </div>
+</div>
+</div></div>
+
+<script>
+const qs=[
+["বাংলাদেশের ভৌগোলিক অবস্থান কোনটি?",["২৪°৩০′ থেকে ২৮°৩৪′ দক্ষিণ অক্ষাংশ","৮০°৩৪′ থেকে ৪০°৯০′ পশ্চিম অক্ষাংশ","৩৪°২৫′ থেকে ২৮°৩৮′ উত্তর অক্ষাংশ","৮৮°০১′ থেকে ৯২°৪১′ পূর্ব দ্রাঘিমাংশ"],3],
+["বাংলার সর্বপ্রাচীন জনপদ কোনটি?",["পুণ্ড্র","সমতট","রাঢ়","হরিকেল"],0],
+["বাংলাদেশে ব-দ্বীপ মহাপরিকল্পনা-২১০০ কোন দেশের পরিকল্পনাকে অনুসরণ করে করা হয়েছে?",["সুইজারল্যান্ড","নেদারল্যান্ডস","আয়ারল্যান্ড","ফিনল্যান্ড"],1],
+["বিলোনিয়া সীমান্ত কোন জেলার অন্তর্গত?",["ফেনী","নীলফামারী","পঞ্চগড়","জয়পুরহাট"],0],
+["বাংলাদেশে বর্তমানে মোট কতটি শিক্ষাবোর্ড রয়েছে?",["৮টি","৯টি","১০টি","১১টি"],3],
+["১৯৭১ সালের ৭ই মার্চের ভাষণটি ইউনেস্কো কবে বিশ্ব প্রামাণ্য ঐতিহ্য হিসেবে ঘোষণা করে?",["৩০ অক্টোবর, ২০১৭","৩০ নভেম্বর, ২০১৭","৩০ সেপ্টেম্বর, ২০১৮","৩০ অক্টোবর, ২০১৮"],0],
+["'বর্ধমান হাউজ' কোথায় অবস্থিত?",["ঢাকা","কলকাতা","পশ্চিমবঙ্গ","কুষ্টিয়া"],0],
+["দেশের প্রস্তাবিত গভীর সমুদ্র বন্দর কোথায় হওয়ার কথা?",["সন্দ্বীপ","হাতিয়া","মনপুরা","সোনাদিয়া"],3],
+["বিশ্বের সবচেয়ে বড় অর্থনৈতিক জোট কোনটি?",["ASEAN","SAFTA","EU","WTO"],2],
+["প্রোগ্রাম থেকে কপি করা ডেটা কোথায় সংরক্ষিত থাকে?",["হার্ডডিস্ক","RAM","ক্লিপবোর্ড","ROM"],2],
+["'আলোর কণা' তত্ত্বের প্রবক্তা কে?",["আইজ্যাক নিউটন","অ্যালো হ্যাজেন","গ্যালিলিও","রামফোর্ড"],0],
+["কোন শহরটি 'বিগ আপেল' নামে পরিচিত?",["লন্ডন","প্যারিস","সিঙ্গাপুর","নিউইয়র্ক"],3],
+["আকাশে উজ্জ্বলতম নক্ষত্র কোনটি?",["লুব্ধক","সূর্য","প্রক্সিমা সেন্টরাই","ধ্রুবতারা"],0],
+["'আসাদগেট' নামের পটভূমির সাথে জড়িত কোন সন?",["১৯৪৭","১৯৫২","১৯৬৯","১৯৭১"],2],
+["ঢাকার ধোলাইখাল কে খনন করেন?",["ইসলাম খান","সরফরাজ খান","মুর্শিদ কুলি খান","ঈশা খান"],0],
+["ইউনেস্কো কবে সুন্দরবনকে বিশ্ব ঐতিহ্য হিসেবে ঘোষণা করে?",["১৯৯৬","১৯৯৭","১৯৯৮","১৯৯৯"],1],
+["ভেটো কথাটি কোন শব্দ থেকে আগত?",["ল্যাটিন","গ্রিক","ফ্রেঞ্চ","ইংরেজি"],0],
+["ভূ-মধ্যসাগর ও আটলান্টিক মহাসাগরের মধ্যে কোন প্রণালি?",["হরমুজ","বসফরাস","পক","জিব্রাল্টার"],3],
+["'War and Peace' উপন্যাসের রচয়িতা কে?",["কার্ল মার্কস","জেন অস্টিন","মন্টেস্কু","লিও টলস্টয়"],3],
+["কোনটিতে রোবটের ব্যবহার করা হয়?",["জটিল সার্জারি চিকিৎসায়","ব্যক্তির স্বাক্ষর শনাক্তকরণে","নতুন জাতের বীজ উৎপাদনে","টেনিস বলের আকৃতি তৈরিতে"],0],
+["'আল আকসা' মসজিদ কোথায় অবস্থিত?",["ফিলিস্তিন","ইসরাইল","আলজেরিয়া","সৌদি আরব"],0],
+["পৃথিবীতে সবচেয়ে মূল্যবান ধাতু কোনটি?",["স্বর্ণ","হীরা","সিলভার","প্লাটিনাম"],3],
+["দেহ বৃদ্ধিকারক হরমোন কোনটি?",["থাইরক্সিন","প্রোল্যাকটিন","এড্রিনালিন","সোমাটোট্রপিক"],3],
+["উচ্চ ফলনশীল শস্য উৎপাদনে কোন প্রযুক্তি ব্যবহৃত হয়?",["বায়োমেট্রিক্স","ভার্চুয়াল রিয়ালিটি","ন্যানোটেকনোলজি","জেনেটিক ইঞ্জিনিয়ারিং"],3],
+["বাংলাদেশের উষ্ণতম স্থান কোনটি?",["লালখাল","লালপুর","রাজশাহী","বগুড়া"],1],
+["২১৯৫২ সংখ্যাটিকে কোন ক্ষুদ্রতম সংখ্যা দ্বারা ভাগ করলে ভাগফল পূর্ণবর্গ সংখ্যা হবে?",["২","৪","৭","৮"],2],
+["৯১, ১০১, ১১৭ এবং ১২৩ এর মধ্যে মৌলিক সংখ্যা কোনটি?",["৯১","১০১","১১৭","১২৩"],1],
+["x-y=2 এবং xy=24 হলে, x+y এর মান কত?",["±৪","±৫","±৭","±১০"],3],
+["∛a=√5 হলে, a এর মান কত?",["3√5","5√5","5","∛5"],1],
+["log₂√5 400 এর মান কত?",["১","২","2√5","৪"],3],
+["m এর মান কত হলে x²+x-m একটি পূর্ণবর্গ রাশি হবে?",["1/2","1/4","-1/2","-1/4"],3],
+["দুইটি সংখ্যার অনুপাত ৩:২ এবং গ.সা.গু ৪ হলে ল.সা.গু কত?",["৪","৮","১৬","২৪"],3],
+["a,b,c ক্রমিক সমানুপাতিক হলে কোনটি সঠিক?",["ab=bc","a²=bc","b²=ca","c²=ab"],2],
+["একটি খুঁটির দৈর্ঘ্য ২০ মিটার। ছায়ার দৈর্ঘ্য কত হলে উন্নতি কোণ 45° হবে?",["২০ মি.","২৫ মি.","৩০ মি.","৪০ মি."],0],
+["একজন মাঝি ১৫ কিমি যেতে ও ফিরে আসতে ৪ ঘণ্টা নেয়। অনুকূলে ৫ কিমি যতক্ষণে যায়, প্রতিকূলে ৩ কিমি যায়। স্রোতের বেগ কত?",["৩","৪","২","১/২"],2],
+["x% ক্ষতিতে বিক্রয় করলে যে মূল্য পাওয়া যায়, 3x% লাভে বিক্রয় করলে তার চেয়ে 18x টাকা বেশি পাওয়া যায়। ক্রয়মূল্য কত?",["৪০০","৫০০","৪৫০","৫৪০"],2],
+["৪% হার মুনাফায় ২ বছরের সরল ও চক্রবৃদ্ধি মুনাফার পার্থক্য ১ টাকা হলে আসল কত?",["৬২৫","৬৫০","৬০০","৭২৫"],0],
+["আয়তাকার ঘরের ক্ষেত্রফল ১৯২ বর্গমিটার। দৈর্ঘ্য ৪ মিটার কমালে ও প্রস্থ ৪ মিটার বাড়ালে ক্ষেত্রফল অপরিবর্তিত থাকে। দৈর্ঘ্য কত?",["১৬ মি.","১২ মি.","৮ মি.","৬ মি."],0],
+["ত্রিভুজের ভূমি উচ্চতার দ্বিগুণ অপেক্ষা ৬ সেমি বেশি। ক্ষেত্রফল ৮১০ বর্গ সেমি হলে উচ্চতা কত?",["৩০","২৭","৩৩","৩৬"],1],
+["সমদ্বিবাহু ত্রিভুজের সমান বাহু ৫ একক ও ভূমি ৬ একক হলে ক্ষেত্রফল কত?",["৬","৮","১০","১২"],3],
+["r ব্যাসার্ধের বৃত্তের কোনো চাপ কেন্দ্রে x° কোণ উৎপন্ন করলে চাপের দৈর্ঘ্য কত?",["πrx/180°","rx/180°","rx","πrx/360°"],0],
+["2sin²θ+3cosθ-3=0 হলে θ কত? (θ সূক্ষ্মকোণ)",["60°","0°","30°","45°"],0],
+["ত্রিভুজের দুই বাহু ২৬ মি ও ২৮ মি এবং ক্ষেত্রফল ১৮২ বর্গমিটার হলে অন্তর্ভুক্ত কোণ কত?",["60°","30°","45°","90°"],1],
+["বৃত্তের ক্ষেত্রফল একটি বর্গের ক্ষেত্রফলের সমান হলে পরিসীমার অনুপাত কত?",["π:2","2:π","√π:2","2π:π"],2],
+["১ ঘন সেমি কাঠের ওজন ৭ ডেসিগ্রাম। সমআয়তন পানির ওজনের কত শতাংশ?",["১০০%","৭০%","১০%","৭%"],1],
+["ত্রিভুজের তিন কোণের অনুপাত 1:1:2 হলে ত্রিভুজটি কী ধরনের?",["সমবাহু","সমদ্বিবাহু","সমকোণী","বিষমবাহু"],2],
+["a⁻ⁿ=1/aⁿ কোন শর্তে সত্য?",["a=0","a≠0","a>0","a<0"],1],
+["32/(64ˣ)=8 হলে x এর মান কত?",["1/3","3","4","8"],0],
+["সমবৃত্তভূমিক বেলনের ভূমির ব্যাসার্ধ r ও উচ্চতা h হলে আয়তন?",["πr²","2rh","2πr(r+h)","πr²h"],3],
+["x−1/x=3/2 হলে x³−1/x³ এর মান কত?",["36","63","36/8","63/8"],3],
+["বাংলা ভাষার উৎস কী?",["হিন্দি ভাষা","বৈদিক ভাষা","উড়িয়া","অনার্য ভাষা"],3],
+["বাংলা ভাষা ও সাহিত্যের মধ্যযুগের প্রথম নিদর্শন কোনটি?",["মধুমালতী","সিকান্দরনামা","শ্রীকৃষ্ণকীর্তন","বৈষ্ণব পদাবলি"],2],
+["সাধু ও চলিত রীতিতে অভিন্নরূপে ব্যবহৃত হয়?",["অব্যয়","সম্বোধন পদ","সর্বনাম","ক্রিয়া"],0],
+["ভাষার কোন রীতি তৎসম শব্দবহুল?",["সাধুরীতি","চলিতরীতি","কথ্যরীতি","লেখ্যরীতি"],0],
+["প্রমথ চৌধুরী সম্পাদিত পত্রিকার নাম?",["তত্ত্ববোধিনী","সবুজপত্র","কল্লোল","ধূমকেতু"],1],
+["'কলম' শব্দটি কোন ভাষা থেকে গৃহীত?",["সংস্কৃত","আরবি","ফারসি","তুর্কি"],1],
+["'পাউরুটি' কোন ভাষার শব্দ?",["পাঞ্জাবি","ফারসি","গুজরাটি","পর্তুগিজ"],3],
+["'আবির্ভাব' এর বিপরীত শব্দ কোনটি?",["অভাব","স্বভাব","অনুভাব","তিরোভাব"],3],
+["'জায়া' শব্দের সমার্থক শব্দ?",["অর্ধাঙ্গিনী","কন্যা","নন্দিনী","ভাগনী"],0],
+["'সাক্ষী গোপাল' বাগধারাটির অর্থ কী?",["অপদার্থ","মূর্খ","নিরেট বোকা","নিষ্ক্রিয় দর্শক"],3],
+["সম্বোধন পদে কোন যতিচিহ্ন বসে?",["কমা","ড্যাস","সেমিকোলন","হাইফেন"],0],
+["কোন বানানটি শুদ্ধ?",["স্বায়ত্ব","স্বায়াত্ব","স্বায়ত্ত","স্বায়ত্ত্ব"],2],
+["'চতুষ্পদ' শব্দের সন্ধি-বিচ্ছেদ?",["চতুর+পদ","চতুষ+পদ","চতু+পদ","চতুঃ+পদ"],3],
+["'মানব' শব্দের প্রকৃতি ও প্রত্যয় কোনটি?",["মুন+ষ্ণ","মনু+অব","মনু+ষ্ণ","মা+নব"],2],
+["প্রত্যয়যোগে গঠিত স্ত্রীবাচক শব্দ কোনটি?",["বাদী","সভানেত্রী","জেলেনি","পেত্নী"],2],
+["'পাপে বিরত থাকো' কোন কারকে কোন বিভক্তি?",["অপাদানে ৭মী","করণ কারকে ৭মী","অধিকরণে ৭মী","কর্ম কারকে ৭মী"],0],
+["বিভক্তিহীন নামপদকে কী বলে?",["বিশেষ্য","সমাস","অব্যয়","প্রাতিপদিক"],3],
+["'উপপদ তৎপুরুষের' উদাহরণ কোনটি?",["ছেলেধরা","প্রতিবাদ","বিলাতফেরত","উপগ্রহ"],0],
+["সমাসবদ্ধ পদ কোনটি?",["আকাশ","ছাড়পত্র","মৃত্তিকা","সাগর"],1],
+["ব্যতিহার বহুব্রীহি সমাসের উদাহরণ?",["চিরসুখী","দশানন","গায়েহলুদ","কানাকানি"],3],
+["'পোস্টাল কোড' কী নির্দেশ করে?",["প্রাপকের এলাকা","ডাকবিভাগের নাম","পোস্ট অফিসের নাম","প্রেরকের এলাকা"],0],
+["'সন্ধি' ব্যাকরণের কোন অংশে আলোচিত হয়?",["রূপতত্ত্বে","বাক্যতত্ত্বে","অর্থতত্ত্বে","ধ্বনিতত্ত্বে"],3],
+["Edition শব্দের অর্থ?",["সংস্করণ","সম্পাদক","সম্পাদকীয়","অনুসন্ধান"],0],
+["ঢাকা + ঈশ্বরী = ঢাকেশ্বরী কোন নিয়মে?",["আ+ঈ=এ","অ+ঈ=এ","আ+ই=এ","অ+ই=এ"],0],
+["বন্ধনী চিহ্ন সাহিত্যে কী অর্থে ব্যবহৃত হয়?",["ধাতু বোঝাতে","অর্থমূলক","ব্যাখ্যামূলক","উৎপন্ন বোঝাতে"],2],
+["'I know you.' Choose the complex form.",["I know you what you are","I know who you are","I know what are you","I know who are you"],1],
+["___ course of time, he became a famous writer.",["In","Of","For","By"],0],
+["___ ink in my pen is red.",["A","The","An","No article"],1],
+["Poly ran fast lest she ___ miss the class.",["could","would","can","should"],3],
+["Which one is correct?",["There is place for doubt in it.","There is no space for doubt in it.","There is no room for doubt in it.","There is no area to doubt in it."],2],
+["'অসারের তর্জন গর্জন সার'-এর সঠিক ইংরেজি?",["Ignorance is vociferous","An idle man speaks much.","A barking dog seldom bites","An empty vessel sound much"],3],
+["'in no time' phrase means?",["instantly","hardly","always","never"],0],
+["The memoranda ........ not important.",["is","has","have","are"],3],
+["The word 'decade' refers to-",["thirty year","fifty year","ten years","twenty five years"],2],
+["No spelling mistake occurs in-",["extravagant","Pronounciation","spureous","temporery"],0],
+["None but ___ brave deserve ___ fair.",["a, an","the, the","the, no article","no article, the"],1],
+["If you help me, I ___ grateful.",["will be remain","should remain","will remain","would remain"],2],
+["Correct assertive form of 'Who does not like a rose?'",["All of us likes a rose","Nobody likes a rose","Everyone likes a rose","Everyone likes a rose"],2],
+["Had you walked fast, you........... the train.",["will not miss","will not have missed","would not have missed","would not miss"],2],
+["'গাছে এখনো ফল ধরে নাই'- The translation is-",["The tree can not bear fruit","The tree has not given fruit yet.","The tree has not caught any fruit.","The tree has not yet borne fruit."],3],
+["The word 'heritage' refers to-",["heir","tradition","legitimacy","intrigue"],1],
+["The price of mango is high in our country -- we turn this land into a mango orchard?",["as if","would rather","what's it like","what if"],3],
+["Ignorance is obstacle ___ progress.",["to","for","with","from"],0],
+["Very few insects are as busy as bee. Correct comparative form?",["A bee is busier than very few insects","A bee is busier than few insects.","A bee is busier than most other insects","A bee is more busy than other insects"],2],
+["Fifty miles ..... not a long distance.",["are","is","have been","were"],1],
+["He came home yesterday. Correct interrogative form?",["Did he come home yesterday?","Did he not came home yesterday?","When did he come home?","When does he come home?"],0],
+["The verb form of 'danger' is-",["dangered","endangered","indanger","endanger"],3],
+["'যেমন কর্ম তেমন ফল'- The translation is-",["All the glitters is not gold.","As you sow, so you reap.","A stitch in time, saves nine.","The more your work, the more you get."],1],
+["Choose the correct answer-",["I will avail myself of the opportunity.","I shall avail of the opportunity.","I will avail myself with the opportunity","I shall avail myself the opportunity"],0],
+["The antonym of 'vice' is-",["honesty","values","virtue","truthful"],2]
+];
+
+const STORAGE_KEY="jmcqbd_exam_state_v1";
+let idx=0,answers=Array(qs.length).fill(null),time=3600,timerId=null,examStarted=false;
+const bn=n=>n.toString().replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+
+function saveState(){
+  if(!examStarted)return;
+  let r=document.querySelector('input[name="opt"]:checked');
+  if(r) answers[idx]=+r.value;
+  localStorage.setItem(STORAGE_KEY,JSON.stringify({
+    idx,answers,time,endAt:Date.now()+time*1000,lastSaved:Date.now()
+  }));
+}
+
+function loadState(){
+  try{
+    const s=JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if(!s || !Array.isArray(s.answers) || s.answers.length!==qs.length)return false;
+    idx=Math.min(Math.max(Number(s.idx)||0,0),qs.length-1);
+    answers=s.answers.map(v=>v===null?null:Number(v));
+    time=Math.max(0,Math.ceil(((Number(s.endAt)|| (Date.now()+(Number(s.time)||0)*1000))-Date.now())/1000));
+    if(time<=0){localStorage.removeItem(STORAGE_KEY);return false}
+    return true;
+  }catch(e){return false}
+}
+
+function updateTimer(){
+  let m=Math.floor(time/60),s=time%60;
+  document.getElementById("timer").textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
+function beginTimer(){
+  clearInterval(timerId);
+  updateTimer();
+  timerId=setInterval(()=>{
+    time--;
+    updateTimer();
+    saveState();
+    if(time<=0)submitExam(true);
+  },1000);
+}
+
+function startExam(){rangePage=idx<Math.ceil(qs.length/2)?0:1;
+  examStarted=true;
+  document.getElementById("startPage").classList.add("hidden");
+  document.getElementById("examPage").classList.remove("hidden");
+  document.getElementById("startTotal").textContent=bn(qs.length);
+  document.getElementById("totalNo").textContent=bn(qs.length);
+  buildJump();render();beginTimer();
+}
+let rangePage=0;
+function buildJump(){
+  let j=document.getElementById("jump");
+  const half=Math.ceil(qs.length/2);
+  const start=rangePage===0?0:half;
+  const end=rangePage===0?half:qs.length;
+  j.innerHTML=qs.slice(start,end).map((_,k)=>{
+    const i=start+k;
+    return `<button id="j${i}" onclick="go(${i})">${bn(i+1)}</button>`;
+  }).join("");
+  mark();
+}
+function showRange(r){
+  rangePage=r;
+  document.getElementById("range1").classList.toggle("rangeActive",r===0);
+  document.getElementById("range2").classList.toggle("rangeActive",r===1);
+  buildJump();
+}
+function render(){let q=qs[idx];document.getElementById("qno").textContent=`${bn(idx+1)}. প্রশ্ন`;document.getElementById("currentNo").textContent=bn(idx+1);document.getElementById("question").textContent=q[0];document.getElementById("bar").style.width=((idx+1)/qs.length*100)+"%";document.getElementById("options").innerHTML=q[1].map((o,i)=>`<label class="option"><input type="radio" name="opt" value="${i}" ${answers[idx]===i?"checked":""} onchange="answers[idx]=${i};mark();saveState()"> ${["ক","খ","গ","ঘ"][i]}. ${o}</label>`).join("");mark()}
+function mark(){document.querySelectorAll("#jump button").forEach((b,i)=>{b.className=(answers[i]!==null?"done ":"")+(i===idx?"current":"")})}
+function go(i){
+  save();
+  idx=i;
+  const half=Math.ceil(qs.length/2);
+  const r=i<half?0:1;
+  if(rangePage!==r) showRange(r);
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function save(){let r=document.querySelector('input[name="opt"]:checked');if(r)answers[idx]=+r.value;saveState()}
+function nextQ(){
+  save();
+  if(idx<qs.length-1){
+    idx++;
+    const half=Math.ceil(qs.length/2);
+    const r=idx<half?0:1;
+    if(rangePage!==r) showRange(r);
+    render();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+}
+function prevQ(){
+  save();
+  if(idx>0){
+    idx--;
+    const half=Math.ceil(qs.length/2);
+    const r=idx<half?0:1;
+    if(rangePage!==r) showRange(r);
+    render();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+}
+function submitExam(auto=false){
+  save();
+  if(!auto){}
+  clearInterval(timerId);
+  localStorage.removeItem(STORAGE_KEY);
+  examStarted=false;
+  let c=0, wrong=0, unanswered=0;
+  qs.forEach((q,i)=>{
+    if(answers[i]===q[2]) c++;
+    else if(answers[i]===null) unanswered++;
+    else wrong++;
+  });
+  const marks = c - (wrong * 0.25);
+  const total = qs.length;
+  const percent = Math.max(0, (marks / total) * 100);
+  document.getElementById("examPage").classList.add("hidden");
+  document.getElementById("resultPage").classList.remove("hidden");
+  document.getElementById("score").textContent=`${bn(Number.isInteger(marks)?marks:marks.toFixed(2))} / ${bn(total)}`;
+  document.getElementById("correct").textContent=bn(c);
+  document.getElementById("wrong").textContent=bn(wrong);
+  document.getElementById("unanswered").textContent=bn(unanswered);
+  document.getElementById("percent").textContent=percent.toFixed(2);
+  document.getElementById("wrongList").innerHTML=qs.map((q,i)=>{
+    const user=answers[i];
+    const correct=user===q[2];
+    const unanswered=user===null;
+    const cls=unanswered?"":"wrongitem";
+    const statusClass=unanswered?"":"";
+    const userText=unanswered?"উত্তর দেওয়া হয়নি":q[1][user];
+    const answerColor=unanswered?"":"color:"+((correct)?"#12924d":"#d82f2f")+";";
+    const status=unanswered?"⚪ উত্তর দেওয়া হয়নি":(correct?"✅ সঠিক উত্তর":"❌ ভুল উত্তর");
+    return `<div class="${cls}" style="${unanswered?"":"border-left-color:"+((correct)?"#12924d":"#e53935")+";"}">
+      <b>${bn(i+1)}. ${q[0]}</b><br>
+      <span style="${answerColor}font-weight:800">${status}</span><br>
+      আপনার উত্তর: <span style="${answerColor}font-weight:800">${userText}</span><br>
+      সঠিক উত্তর: <span class="correct">${q[1][q[2]]}</span>
+    </div>`;
+  }).join("");
+  window.scrollTo({top:0,behavior:"smooth"})
+}
+window.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("startTotal").textContent=bn(qs.length);
+  document.getElementById("totalNo").textContent=bn(qs.length);
+  if(loadState() && time>0){
+    examStarted=true;
+    document.getElementById("startPage").classList.add("hidden");
+    document.getElementById("examPage").classList.remove("hidden");
+    buildJump();render();beginTimer();
+  }else{
+    localStorage.removeItem(STORAGE_KEY);
+  }
+});
+
+</script>
+</body></html>
