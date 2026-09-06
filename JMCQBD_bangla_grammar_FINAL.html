@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JMCQBD - বাংলা ব্যাকরণ MCQ Quiz</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Noto Sans Bengali","SolaimanLipi",Arial,sans-serif;background:#eef4ff;color:#172033}
+.wrap{max-width:900px;margin:auto;padding:14px}
+.card{background:#fff;border-radius:22px;box-shadow:0 8px 30px #0001;overflow:hidden}
+.head{background:linear-gradient(135deg,#123f9e,#1767d8);color:#fff;text-align:center;padding:20px 15px}
+.brand{font-size:30px;font-weight:900;letter-spacing:1px}
+.exam{font-size:20px;font-weight:800;margin-top:7px}
+.start{padding:35px 22px;text-align:center}
+.icon{font-size:62px}
+.start h1{font-size:27px;margin:12px 0}
+.info{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:25px 0}
+.pill{background:#f1f6ff;border:1px solid #d8e5ff;border-radius:15px;padding:14px 22px;font-weight:700}
+button{border:0;border-radius:12px;padding:13px 25px;font-size:18px;font-weight:800;cursor:pointer}
+.startbtn{background:#16a765;color:#fff;min-width:220px}
+.top{display:flex;align-items:center;justify-content:space-between;background:#123f9e;color:#fff;padding:13px 18px;font-weight:800;gap:10px}
+.timer{font-size:18px;background:#0b317f;padding:7px 13px;border-radius:20px;white-space:nowrap}
+.body{padding:18px}
+.range{display:flex;gap:8px;margin-bottom:10px}
+.range button{flex:1;background:#eef3fb;color:#17468f;padding:10px 12px;font-size:15px}
+.range button.active{background:#1767d8;color:#fff}
+.jump{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px;margin-bottom:16px}
+.jump button{padding:6px 4px;font-size:12px;background:#edf2fa;color:#234}
+.jump button.done{background:#16a765;color:#fff}
+.jump button.current{outline:3px solid #ffd166}
+.progress{height:8px;background:#e6ebf5;border-radius:20px;overflow:hidden;margin-bottom:15px}
+.bar{height:100%;background:#16a765;width:1%}
+.qno{font-size:18px;font-weight:800;color:#1452b8}
+.question{font-size:22px;font-weight:800;line-height:1.65;margin:10px 0 18px}
+.option{display:block;border:1px solid #d6deeb;padding:13px 15px;margin:10px 0;border-radius:12px;cursor:pointer;font-size:18px;background:#fff}
+.option:hover{background:#f3f7ff}
+.option.selected{border-color:#1767d8;background:#eef4ff;box-shadow:0 0 0 2px #1767d822}
+.option input{margin-right:10px;transform:scale(1.25)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+.prev{background:#eef3fb;color:#17468f}
+.next{background:#1767d8;color:#fff}
+.submit{display:block;background:#e53935;color:#fff;margin:22px auto 0;min-width:170px}
+.notice{display:none;background:#fff3cd;border:1px solid #ffe08a;color:#765500;border-radius:12px;padding:13px;margin:0 0 15px;font-weight:800}
+.notice.show{display:block}
+.notice button{background:transparent;color:#1452b8;padding:2px 5px;font-size:16px}
+.result{padding:28px 18px}
+.resultTitle{text-align:center;font-size:24px;font-weight:900;color:#1452b8}
+.score{text-align:center;font-size:42px;font-weight:900;color:#1767d8;margin-top:8px}
+.stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0}
+.stat{padding:14px 22px;border-radius:14px;background:#f4f7fb;font-weight:800}
+.correct{color:#12924d}
+.wrong{color:#d82f2f}
+.review{text-align:left;margin-top:22px}
+.review h2{color:#1452b8}
+.reviewitem{border:1px solid #d6deeb;border-left:5px solid #d6deeb;padding:14px;border-radius:10px;margin:12px 0;background:#fff}
+.reviewitem.correctItem{border-left-color:#12924d}
+.reviewitem.wrongItem{border-left-color:#d82f2f}
+.reviewitem.unansweredItem{border-left-color:#d6deeb}
+.reviewq{font-weight:900;line-height:1.6;margin-bottom:8px}
+.reviewline{margin:5px 0;line-height:1.5}
+.restart{display:block;background:#1767d8;color:#fff;margin:22px auto 0}
+.hidden{display:none!important}
+@media(max-width:600px){
+.wrap{padding:8px}
+.brand{font-size:25px}
+.exam{font-size:17px}
+.start h1{font-size:22px}
+.question{font-size:19px}
+.option{font-size:16px;padding:14px 12px}
+.top{font-size:13px;padding:11px 10px}
+.timer{font-size:14px;padding:6px 9px}
+.body{padding:13px}
+.jump{grid-template-columns:repeat(5,minmax(0,1fr))}
+.jump button{font-size:11px}
+.range button{font-size:13px;padding:9px 5px}
+.score{font-size:34px}
+}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+
+<div id="startPage">
+  <div class="head"><div class="brand">JMCQBD</div><div class="exam">বাংলা ব্যাকরণ MCQ Quiz</div></div>
+  <div class="start">
+    <div class="icon">📚</div>
+    <h1>সর্বনাম, অব্যয় ও ক্রিয়াপদ</h1>
+    <p>গুরুত্বপূর্ণ বাছাই করা বহুনির্বাচনী প্রশ্ন</p>
+    <div class="info">
+      <div class="pill">📝 প্রশ্ন: <span id="startTotal">৫০</span>টি</div>
+      <div class="pill">⏱️ সময়: ১৫ মিনিট</div>
+    </div>
+    <button class="startbtn" onclick="startExam()">START</button>
+  </div>
+</div>
+
+<div id="examPage" class="hidden">
+  <div class="top"><span>JMCQBD</span><span class="timer">⏱️ <span id="timer">15:00</span></span><span>প্রশ্ন <span id="currentNo">১</span>/<span id="totalNo">৫০</span></span></div>
+  <div class="body">
+    <div class="range">
+      <button id="range1" onclick="showRange(0)"></button>
+      <button id="range2" onclick="showRange(1)"></button>
+    </div>
+    <div class="jump" id="jump"></div>
+    <div id="notice" class="notice"></div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="qno" id="qno"></div>
+    <div class="question" id="question"></div>
+    <div id="options"></div>
+    <div class="nav"><button class="prev" onclick="prevQ()">◀ পূর্ববর্তী</button><button class="next" onclick="nextQ()">পরবর্তী ▶</button></div>
+    <button class="submit" onclick="submitExam(false)">SUBMIT</button>
+  </div>
+</div>
+
+<div id="resultPage" class="hidden">
+ <div class="head"><div class="brand">JMCQBD</div><div class="exam">পরীক্ষার ফলাফল</div></div>
+ <div class="result">
+  <div class="resultTitle">ফলাফল</div>
+  <div class="score" id="score"></div>
+  <div class="stats">
+    <div class="stat correct">সঠিক: <span id="correct"></span></div>
+    <div class="stat wrong">ভুল: <span id="wrong"></span></div>
+    <div class="stat">উত্তর দেওয়া হয়নি: <span id="unanswered"></span></div>
+    <div class="stat">শতকরা: <span id="percent"></span>%</div>
+  </div>
+  <div class="review"><h2>সব প্রশ্নের উত্তর পর্যালোচনা</h2><div id="reviewList"></div></div>
+  <button class="restart" onclick="restartQuiz()">আবার পরীক্ষা দিন</button>
+ </div>
+</div>
+
+</div></div>
+
+<script>
+const qs=[["ভাষায় সর্বনাম ব্যবহারের প্রধান উদ্দেশ্য কী?",["সৌন্দর্য বৃদ্ধি করা","বিশেষ্যের পুনরাবৃত্তি দূর করা","বাক্যের দৈর্ঘ্য কমানো","ক্রিয়াপদকে জোর দেওয়া"],1],["নিচের কোনটি ব্যতিহারিক সর্বনামের উদাহরণ?",["নিজে নিজে","সে","এরা-ওরা","কে"],0],["'তুমি এতক্ষণ কী করেছ?'— এই বাক্যে 'কী' কোন পদ?",["বিশেষণ","ক্রিয়া","সর্বনাম","অব্যয়"],2],["'যেমন কর্ম তেমন ফল'— এটি কোন ধরনের বাক্য?",["সরল","যৌগিক","সাপেক্ষ","খণ্ড"],2],["কোনটি নিত্য সম্বন্ধীয় অব্যয়ের উদাহরণ?",["ধন অপেক্ষা মান বড়","তুমি না বলেছিলে আসবে","যত ধর্ম তত জয়","রাম ও শ্যাম এসেছে"],2],["'অতি ভক্তি চোরের লক্ষণ'— বাক্যটিতে 'অতি' কোন পদ?",["নাম বিশেষণ","বিশেষণের বিশেষণ","ক্রিয়া বিশেষণ","অব্যয়"],1],["'মরি মরি! কী সুন্দর প্রভাতের রূপ!'— এখানে 'মরি মরি' কোন অব্যয়?",["সমুচ্চয়ী অব্যয়","অনন্বয়ী অব্যয়","অনুসর্গ অব্যয়","অনুকার অব্যয়"],1],["'লোকটি দরিদ্র কিন্তু সৎ'— এই বাক্যে 'কিন্তু' কোন ধরনের অব্যয়?",["সংযোজক","বিয়োজক","সংকোচক","অনন্বয়ী"],1],["'পলাশ দেখতে সুন্দর বটে কিন্তু গন্ধহীন'— এখানে 'কিন্তু' কী নির্দেশ করে?",["বিয়োজক","সংযোজক","সংকোচক","পদাশ্রয়ী"],2],["দ্বারা, দিয়া, হইতে, থেকে— এগুলোকে ব্যাকরণে কী বলে?",["উপসর্গ","অনুসর্গ অব্যয়","অনুকার অব্যয়","অনন্বয়ী অব্যয়"],1],["'কড়কড়' কোন ধরনের অব্যয়?",["অনন্বয়ী","সমুচ্চয়ী","অনুকার","অনুসর্গ"],2],["'বৃষ্টি পড়ে টাপুর টুপুর'— বাক্যে 'টাপুর টুপুর' কোন পদ?",["বিশেষ্য","ক্রিয়া","অব্যয়","বিশেষণ"],2],["'তুমি না বলেছিলে আগামীকাল আসবে?'— এখানে 'না' কী অর্থে ব্যবহৃত হয়েছে?",["না-বাচক","হ্যাঁ-বাচক","প্রশ্নবোধক","সংশয় প্রকাশে"],1],["'সে নাকি আসবে না।'— বাক্যে 'না' অব্যয়টি কী অর্থে প্রযুক্ত?",["নিশ্চয়তা","সম্ভাবনা অর্থে","বিস্ময়","বিরক্তি"],1],["'কী আপদ! লোকটা যে পিছু ছাড়ে না।'— এখানে 'কী' দ্বারা কী প্রকাশ পেয়েছে?",["বিরক্তি","ভয়","রাগ","যন্ত্রণা"],0],["'শুধু শুধু তিনি রেগে ওঠেন।'— বাক্যে কোন ভাব প্রকাশ পেয়েছে?",["ধারাবাহিকতা","আকস্মিকতা","অভ্যাস","ব্যাপ্তি"],1],["'তুই কি কাজ করবি, না মার খাবি?'— বাক্যে 'কি' অব্যয়ের ব্যবহার হয়েছে—",["প্রশ্ন জিজ্ঞাসায়","শাসন করায়","বিরক্তি প্রকাশে","ক্রোধ প্রকাশে"],2],["'তাকেও আসতে বলেছি।'— এই বাক্যে 'ও' অব্যয়টি কী অর্থে ব্যবহৃত হয়েছে?",["নির্দেশ অর্থে","স্বীকৃতি জ্ঞাপনে","বিকল্প প্রকাশে","অনুরোধে"],0],["'আ মরি বাংলা ভাষা'— এখানে 'আ' দ্বারা কী প্রকাশ পেয়েছে?",["আবেগ","আনন্দ","আনুগত্য","বিষাদ"],1],["বাক্যের অপরিহার্য বা প্রধান পদ কোনটি?",["নামপদ","কর্মপদ","ক্রিয়াপদ","কর্তিপদ"],2],["উৎপত্তির দিক থেকে ক্রিয়াপদ কোন দুই ভাগে বিভক্ত?",["অকর্মক ও সকর্মক","সমাপিকা ও অসমাপিকা","মৌলিক ও কৃদন্ত","ধাতু ও তদ্ধিত"],2],["'বাবা বাড়ি নেই।'— বাক্যে 'নেই' কোন পদ?",["বিশেষ্য","বিশেষণ","সর্বনাম","ক্রিয়া"],3],["কোন বাক্যে সমাপিকা ক্রিয়া ব্যবহৃত হয়েছে?",["আমি ভাত খাচ্ছি","আমি ভাত খেয়ে স্কুলে যাব","আমি দুপুরে ভাত খাই","তাড়াতাড়ি ভাত খেয়ে ওঠ"],2],["'মা শিশুকে চাঁদ দেখাচ্ছেন'— বাক্যটি কোন ক্রিয়ার উদাহরণ?",["দ্বিকর্মক ক্রিয়া","প্রযোজক ক্রিয়া","সমধাতুজ ক্রিয়া","যৌগিক ক্রিয়া"],1],["'মা শিশুকে খাওয়াচ্ছেন'— এখানে 'শিশু' কোন কর্তা?",["মুখ্য কর্তা","প্রযোজক কর্তা","প্রযোজ্য কর্তা","কোনটিই নয়"],2],["'ছেলেটি গোল্লায় গেছে'— বাক্যে 'গেছে' বা 'গোল্লায় গেছে' কোন ধরনের ক্রিয়া?",["যৌগিক ক্রিয়া","মিশ্র ক্রিয়া","প্রযোজক ক্রিয়া","নামধাতুর ক্রিয়া"],0],["'যত্ন করলে রত্ন মেলে'— এখানে 'করলে' কোন ধরনের ক্রিয়া?",["সমাপিকা","অকর্মক","অসমাপিকা","দ্বিকর্মক"],2],["সাধারণত বাক্যে সমাপিকা ক্রিয়াপদ কোথায় বসে?",["প্রথমে","কর্মের আগে","শেষে","অব্যয়ের পরে"],2],["কোনটি অকর্মক ক্রিয়ার উদাহরণ?",["আমি চোখে দেখি না","আকাশে চাঁদ দেখছি না","ছেলেটি কথা শোনে","সে বই পড়ে"],0],["কিসের ভেদে ক্রিয়ার রূপের কোনো পরিবর্তন হয় না?",["কালভেদে","পুরুষভেদে","বচনভেদে","অর্থভেদে"],1],["কোন বাক্যে সমধাতুজ কর্ম রয়েছে?",["সে বই পড়ছে","সে খুব আরামে ঘুম ঘুমিয়েছে","সে বিজ্ঞানের একটি সমস্যা নিয়ে ভাবছে","সে ঘুমাচ্ছে"],1],["'সূর্য উঠলে আঁধার দূরীভূত হয়'— 'উঠলে' কোন ধরনের ক্রিয়া?",["সমাপিকা","অসমাপিকা","প্রযোজক","প্রযোজ্য"],1],["সংযোগজ্ঞাপক সর্বনাম কোনটি?",["স্বয়ং","যে","তাং","কিছু"],1],["'তুমি তো ভারি সুন্দর ছবি আঁকো'— বাক্যটিতে 'তো' কোন প্রকারের অব্যয়?",["অনুকার","অনন্বয়ী","অনুসর্গ","সংযোজক"],1],["'সাইরেন বেজে উঠল'— বাক্যটিতে 'বেজে উঠল' কোন ধরনের ক্রিয়া?",["মিশ্র","যৌগিক","প্রযোজক","সমধাতুজ"],1],["'এখন গোল্লায় যাও'— এটি কোন ক্রিয়ার উদাহরণ?",["মিশ্র ক্রিয়া","যৌগিক ক্রিয়া","প্রজোযক ক্রিয়া","নামধাতুর ক্রিয়া"],0],["'আমি', 'আমরা'— এগুলো কোন ধরনের সর্বনাম পদ?",["আত্মবাচক","ব্যক্তিবাচক","ব্যতিহারিক","সাকল্যবাচক"],1],["'বেশ এক ঘুম ঘুমিয়েছি'— বাক্যের চিহ্নিত অংশটি কোন পদ?",["প্রযোজক ক্রিয়া","যৌগিক ক্রিয়া","অনুক্ত কর্ম","সমধাতুজ কর্ম"],3],["একটি বাক্যের সবচেয়ে প্রয়োজনীয় অংশ কোনটি?",["বিশেষ্য","বিশেষণ","ক্রিয়াপদ","অব্যয়"],2],["নিচের কোনটি সর্বনামের প্রকারভেদ নয়?",["আত্মবাচক","সাপেক্ষবাচক","ব্যতিহারিক","পূরণবাচক"],3],["'ছি! ছি! তুমি এত খারাপ।'— বাক্যে 'ছি! ছি!' দ্বারা কী প্রকাশ পেয়েছে?",["ভাব প্রবলতা / ভাবের গভীরতা","পৌনঃপুনিকতা","ধারাবাহিকতা","অনুভূতি ভাব"],0],["'নানী নাতিকে চাঁদ দেখাচ্ছেন'— এ বাক্যে কোনটি প্রযোজ্য কর্তা?",["নানী","চাঁদ","নাতি","দেখাচ্ছেন"],2],["ধাতুর সঙ্গে কী যুক্ত হয়ে ক্রিয়া গঠিত হয়?",["প্রত্যয়","অনুসর্গ","বিভক্তি","উপসর্গ"],0],["'পারস্পরিক সর্বনাম' কোনটি?",["যেমন-যেমন","নিজেরা-নিজেরা","নিজে","সকলে"],1],["ক্রিয়ার প্রথম বা মৌলিক অংশকে কী বলে?",["শব্দ","শব্দমূল","ধাতু","ক্রিয়া বিভক্তি"],2],["বিদেশি উৎস থেকে আগত অব্যয় শব্দ কোনটি?",["খুব","আবার","আর","যদি"],0],["'কল কল রবে নদী বইছে'— এখানে 'কল কল' কোন অব্যয়?",["সমুচ্চয়ী","অনুসর্গ","অনন্বয়ী","অনুকার"],3],["'তোমার নাম কী?'— এখানে 'কী' কোন পদ?",["প্রশ্নবাচক","অব্যয়","সর্বনাম","বিশেষণ"],2],["কোনটি আত্মবাচক সর্বনাম পদ?",["খুদ","এই","কে","নিজে নিজে"],3],["যোজক কাকে কাকে যুক্ত করতে পারে?",["পদ","বর্গ","বাক্য","সবগুলো"],3]];
+const STORAGE_KEY="jmcqbd_bangla_grammar_quiz_v1";
+const TOTAL_TIME=900;
+let idx=0,answers=Array(qs.length).fill(null),time=TOTAL_TIME,timerId=null,running=false,currentRange=0;
+
+const bn=n=>String(n).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+const letters=["ক","খ","গ","ঘ"];
+
+function saveState(){
+  if(!running)return;
+  save();
+  localStorage.setItem(STORAGE_KEY,JSON.stringify({idx,answers,time,running:true}));
+}
+
+function loadState(){
+  try{
+    const s=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
+    if(s && s.running===true && Array.isArray(s.answers) && s.answers.length===qs.length && Number.isFinite(s.time)){
+      idx=Math.max(0,Math.min(qs.length-1,Number(s.idx)||0));
+      answers=s.answers.map(v=>v===null?null:Number(v));
+      time=Math.max(0,Math.min(TOTAL_TIME,Number(s.time)));
+      running=true;
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+
+function startExam(){
+  if(loadState()){
+    document.getElementById("startPage").classList.add("hidden");
+    document.getElementById("examPage").classList.remove("hidden");
+    buildRanges();buildJump();render();startTimer();return;
+  }
+  idx=0;answers=Array(qs.length).fill(null);time=TOTAL_TIME;running=true;
+  document.getElementById("startPage").classList.add("hidden");
+  document.getElementById("examPage").classList.remove("hidden");
+  buildRanges();buildJump();render();saveState();startTimer();
+}
+
+function resumeIfNeeded(){
+  if(loadState()){
+    document.getElementById("startPage").classList.add("hidden");
+    document.getElementById("examPage").classList.remove("hidden");
+    buildRanges();buildJump();render();startTimer();
+  }else{
+    document.getElementById("startTotal").textContent=bn(qs.length);
+    document.getElementById("totalNo").textContent=bn(qs.length);
+  }
+}
+
+function buildRanges(){
+  const mid=Math.ceil(qs.length/2);
+  document.getElementById("range1").textContent=bn(1)+"–"+bn(mid);
+  document.getElementById("range2").textContent=bn(mid+1)+"–"+bn(qs.length);
+  currentRange=idx<mid?0:1;
+  updateRangeButtons();
+}
+
+function updateRangeButtons(){
+  document.getElementById("range1").classList.toggle("active",currentRange===0);
+  document.getElementById("range2").classList.toggle("active",currentRange===1);
+}
+
+function showRange(r){
+  currentRange=r;updateRangeButtons();buildJump();window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function buildJump(){
+  const mid=Math.ceil(qs.length/2);
+  const start=currentRange===0?0:mid,end=currentRange===0?mid:qs.length;
+  document.getElementById("jump").innerHTML=Array.from({length:end-start},(_,k)=>{
+    const i=start+k;
+    return `<button id="j${i}" onclick="go(${i})">${bn(i+1)}</button>`;
+  }).join("");
+  mark();
+}
+
+function mark(){
+  document.querySelectorAll("#jump button").forEach(b=>{
+    const i=Number(b.id.slice(1));
+    b.className=(answers[i]!==null?"done ":"")+(i===idx?"current":"");
+  });
+}
+
+function render(){
+  const q=qs[idx];
+  document.getElementById("qno").textContent=bn(idx+1)+". প্রশ্ন";
+  document.getElementById("currentNo").textContent=bn(idx+1);
+  document.getElementById("totalNo").textContent=bn(qs.length);
+  document.getElementById("question").textContent=q[0];
+  document.getElementById("bar").style.width=((idx+1)/qs.length*100)+"%";
+  document.getElementById("options").innerHTML=q[1].map((o,i)=>`<label class="option ${answers[idx]===i?"selected":""}"><input type="radio" name="opt" value="${i}" ${answers[idx]===i?"checked":""} onchange="choose(${i})"> ${letters[i]}. ${o}</label>`).join("");
+  document.getElementById("timer").textContent=formatTime(time);
+  mark();
+}
+
+function choose(i){
+  answers[idx]=i;
+  render();
+  saveState();
+}
+
+function save(){
+  const r=document.querySelector('input[name="opt"]:checked');
+  if(r)answers[idx]=+r.value;
+}
+
+function go(i){
+  save();idx=i;currentRange=idx<Math.ceil(qs.length/2)?0:1;
+  buildRanges();render();saveState();window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function nextQ(){
+  save();
+  if(idx<qs.length-1){idx++;currentRange=idx<Math.ceil(qs.length/2)?0:1;buildRanges();render();saveState();window.scrollTo({top:0,behavior:"smooth"});}
+}
+
+function prevQ(){
+  save();
+  if(idx>0){idx--;currentRange=idx<Math.ceil(qs.length/2)?0:1;buildRanges();render();saveState();window.scrollTo({top:0,behavior:"smooth"});}
+}
+
+function formatTime(t){
+  const m=Math.floor(t/60),s=t%60;
+  return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+
+function startTimer(){
+  clearInterval(timerId);
+  document.getElementById("timer").textContent=formatTime(time);
+  if(time<=0){submitExam(true);return;}
+  timerId=setInterval(()=>{
+    time--;
+    document.getElementById("timer").textContent=formatTime(time);
+    saveState();
+    if(time<=0){clearInterval(timerId);submitExam(true);}
+  },1000);
+}
+
+function submitExam(auto){
+  save();
+  const unanswered=[];
+  qs.forEach((q,i)=>{if(answers[i]===null)unanswered.push(i);});
+  clearInterval(timerId);running=false;
+  localStorage.removeItem(STORAGE_KEY);
+  let c=0,w=0,u=0;
+  qs.forEach((q,i)=>{
+    if(answers[i]===null)u++;
+    else if(answers[i]===q[2])c++;
+    else w++;
+  });
+  const score=c;
+  const percent=(score/qs.length*100).toFixed(2);
+  document.getElementById("examPage").classList.add("hidden");
+  document.getElementById("resultPage").classList.remove("hidden");
+  document.getElementById("score").textContent=bn(score)+" / "+bn(qs.length);
+  document.getElementById("correct").textContent=bn(c);
+  document.getElementById("wrong").textContent=bn(w);
+  document.getElementById("unanswered").textContent=bn(u);
+  document.getElementById("percent").textContent=bn(percent);
+  document.getElementById("reviewList").innerHTML=qs.map((q,i)=>{
+    const ua=answers[i];
+    const cls=ua===null?"unansweredItem":(ua===q[2]?"correctItem":"wrongItem");
+    const uaText=ua===null?"উত্তর দেওয়া হয়নি":letters[ua]+". "+q[1][ua];
+    const caText=letters[q[2]]+". "+q[1][q[2]];
+    return `<div class="reviewitem ${cls}">
+      <div class="reviewq">${bn(i+1)}. ${q[0]}</div>
+      <div class="reviewline">আপনার উত্তর: <span class="${ua===null?"":(ua===q[2]?"correct":"wrong")}">${uaText}</span></div>
+      <div class="reviewline">সঠিক উত্তর: <span class="correct">${caText}</span></div>
+    </div>`;
+  }).join("");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function restartQuiz(){
+  clearInterval(timerId);localStorage.removeItem(STORAGE_KEY);
+  idx=0;answers=Array(qs.length).fill(null);time=TOTAL_TIME;running=true;currentRange=0;
+  document.getElementById("resultPage").classList.add("hidden");
+  document.getElementById("examPage").classList.remove("hidden");
+  document.getElementById("notice").classList.remove("show");
+  buildRanges();buildJump();render();saveState();startTimer();window.scrollTo({top:0,behavior:"smooth"});
+}
+
+window.addEventListener("beforeunload",saveState);
+resumeIfNeeded();
+</script>
+</body>
+</html>
